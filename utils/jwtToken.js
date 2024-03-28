@@ -2,11 +2,9 @@
 const jwt = require("jsonwebtoken");
 
 const sendToken = (user, statusCode, res) => {
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user.uid }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_EXPIRES * 60 * 60 * 24 * 1000,
     });
-
-    console.log("jwt token =======> " + token);
 
     // Options for cookies
     const options = {
@@ -22,7 +20,7 @@ const sendToken = (user, statusCode, res) => {
     };
 
     res.cookie('token', token, options);
-    res.status(200).send({ success: true, user, token });
+    res.status(statusCode).send({ success: true, user, token });
 }
 
 module.exports = sendToken;

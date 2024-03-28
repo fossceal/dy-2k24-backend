@@ -1,13 +1,16 @@
 const userRouter = require('express').Router();
 
 const {
-    createUser, loginUser, logoutUser
+    createUser, loginUser, logoutUser, getUser
 } = require('../controllers/authentication_controller');
+const { authorizeRoles, isAuthenticatedUser } = require('../middlewares/auth');
 
-adminRouter.post('/createUser', createUser);
+userRouter.post('/createUser', createUser);
 
-adminRouter.post('/loginUser', loginUser);
+userRouter.post('/loginUser', loginUser);
 
-adminRouter.get('/logoutAdmin', logoutUser);
+userRouter.get('/logoutUser', logoutUser);
+
+userRouter.get('/me', isAuthenticatedUser, authorizeRoles("user", "admin"), getUser);
 
 module.exports = userRouter;

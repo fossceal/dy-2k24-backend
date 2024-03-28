@@ -1,9 +1,17 @@
 const express = require("express");
-require("dotenv").config();
+
+require("dotenv").config({
+    path: "./secrets/.env"
+});
+
 const app = express();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
 
 const { connectDatabase } = require("./configs/db");
 const userRouter = require("./routes/authentication_route");
+
 
 app.use(cors({
     origin: ["https://dakshayanthra.in", "https://server.dakshayanthra.in", "http://localhost:3000"],
