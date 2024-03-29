@@ -78,9 +78,9 @@ exports.updateEvent = async (req, res) => {
             await updatedEvent.save();
         }
 
-        await event.updateOne({ _id: eventID }, req.body, { new: true, runValidators: true });
+        const newData = await event.findOneAndUpdate({ _id: eventID }, req.body, { new: true });
 
-        res.status(200).json({ success: true, message: 'Event updated successfully', data: updatedEvent });
+        res.status(200).json({ success: true, message: 'Event updated successfully', data: newData });
     }
     catch (err) {
         console.log(err);
