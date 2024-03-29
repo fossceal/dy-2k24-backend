@@ -10,14 +10,26 @@ const uploadStorage = multer({ storage: storage });
 
 const { authorizeRoles, isAuthenticatedUser } = require('../middlewares/auth');
 
-eventsRouter.post('/createEvent', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), createEvent);
+// eventsRouter.post('/createEvent', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), createEvent);
 
-eventsRouter.get('/getAllEvents', isAuthenticatedUser, authorizeRoles("user", "admin"), getAllEvents);
+// eventsRouter.get('/getAllEvents', isAuthenticatedUser, authorizeRoles("user", "admin"), getAllEvents);
 
-eventsRouter.get('/getEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), getEvent);
+// eventsRouter.get('/getEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), getEvent);
 
-eventsRouter.put('/updateEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), updateEvent);
+// eventsRouter.put('/updateEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), updateEvent);
 
-eventsRouter.delete('/deleteEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), deleteEvent);
+// eventsRouter.delete('/deleteEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), deleteEvent);
+
+//debug endpoints
+
+eventsRouter.post('/createEvent', uploadStorage.single("file"), createEvent);
+
+eventsRouter.get('/getAllEvents', getAllEvents);
+
+eventsRouter.get('/getEvent/:id', getEvent);
+
+eventsRouter.put('/updateEvent/:id', uploadStorage.single("file"), updateEvent);
+
+eventsRouter.delete('/deleteEvent/:id', deleteEvent);
 
 module.exports = eventsRouter;
