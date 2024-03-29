@@ -3,6 +3,7 @@ const userRouter = require('express').Router();
 const {
     createUser, loginUser, logoutUser, getUser
 } = require('../controllers/authentication_controller');
+
 const { authorizeRoles, isAuthenticatedUser } = require('../middlewares/auth');
 
 userRouter.post('/createUser', createUser);

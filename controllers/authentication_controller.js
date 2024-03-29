@@ -1,6 +1,6 @@
 const User = require('../models/user_model');
 const sendToken = require('../utils/jwtToken');
-const firebaseAdmin = require('../configs/firebase');
+const { firebaseAdmin } = require('../configs/firebase');
 
 exports.createUser = async (req, res) => {
     try {
