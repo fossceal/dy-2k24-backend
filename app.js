@@ -14,11 +14,7 @@ const { connectDatabase } = require("./configs/db");
 const userRouter = require("./routes/authentication_route");
 const eventsRouter = require("./routes/events_route");
 
-app.use(cors({
-    origin: ["https://dakshayanthra.in", "https://server.dakshayanthra.in", "http://localhost:3000", "http://localhost:5500"],
-    credentials: true,
-    sameSite: "none"
-}));
+app.use(cors());
 
 connectDatabase();
 
