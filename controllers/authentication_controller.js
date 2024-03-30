@@ -26,7 +26,7 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const { uid, token } = req.body;
+        const { uid, token, name } = req.body;
 
         const decodedToken = await firebaseAdmin.auth().verifyIdToken(token);
 
@@ -37,7 +37,13 @@ exports.loginUser = async (req, res) => {
         const user = await User.findOne({ uid: uid });
 
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+            user = await User.create({
+                uid: uid,
+                name: name
+            });
+
+            sendToken(user, 200, res);
+            return;
         }
 
         sendToken(user, 200, res);
