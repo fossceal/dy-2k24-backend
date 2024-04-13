@@ -117,3 +117,37 @@ exports.deleteEvent = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+exports.getPaginatedEvents = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
+        const results = {};
+
+        if (endIndex < await event.countDocuments().exec()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            };
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            };
+        }
+
+        results.results = await event.find().limit(limit).skip(startIndex).exec();
+        res.status(200).json({ success: true, data: results });
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
