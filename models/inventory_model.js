@@ -11,6 +11,12 @@ const inventoryModel = new mongoose.Schema({
     },
     quantity: {
         type: Number
+    },
+    transaction_id: {
+        type: String
+    },
+    payment_screenshot: {
+        type: String
     }
 });
 

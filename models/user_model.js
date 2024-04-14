@@ -10,6 +10,14 @@ const userModel = new mongoose.Schema({
     role: {
         type: String,
         default: 'user',
+    },
+    email: String,
+    phone: String,
+    college: String,
+    year: String,
+    isCompletedProfile: {
+        type: Boolean,
+        default: false,
     }
 });
 
