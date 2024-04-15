@@ -6,8 +6,6 @@ const {
 
 const { authorizeRoles, isAuthenticatedUser } = require('../middlewares/auth');
 
-
-
 userRouter.post('/createUser', createUser);
 
 userRouter.post('/loginUser', loginUser);

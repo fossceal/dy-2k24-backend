@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Event = require("./events_model");
 
 const cartSchema = new mongoose.Schema({
     user: {
@@ -28,20 +29,16 @@ const cartSchema = new mongoose.Schema({
     timestamps: true
 });
 
-cartSchema.post('save', async function () {
-
-    this.cartItems.forEach(async (item) => {
-        const event = await Event.findOne({ _id: item.event });
-
-        if (!event) {
-            return;
-        }
-
-        this.totalPrice += event.amount;
-    });
-
-    await this.save();
-
+cartSchema.pre('save', async function (next) {
+    let cart = this;
+    let totalPrice = 0;
+    for (let i = 0; i < cart.cartItems.length; i++) {
+        let event = await Event.findById(cart.cartItems[i].event);
+        totalPrice += event.amount * cart.cartItems[i].quantity;
+    }
+    cart.totalPrice = totalPrice;
+    next();
 });
 
 const Cart = mongoose.model('Cart', cartSchema);
+module.exports = Cart;

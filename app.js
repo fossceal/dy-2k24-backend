@@ -13,6 +13,7 @@ const bodyParser = require("body-parser");
 const { connectDatabase } = require("./configs/db");
 const userRouter = require("./routes/authentication_route");
 const eventsRouter = require("./routes/events_route");
+const cartRouter = require("./routes/cart_route");
 
 app.use(cors());
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/v2", userRouter);
 app.use("/api/v2", eventsRouter);
+app.use("/api/v2", cartRouter);
 
 //expose public folder
 app.use(express.static(__dirname + '/public'));

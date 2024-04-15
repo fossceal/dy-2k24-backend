@@ -5,6 +5,10 @@ exports.createEvent = async (req, res) => {
     try {
         const { name, datetime, description, location, rules, amount } = req.body;
 
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Please upload an image' });
+        }
+
         const imageFileRemotePath = process.env.ENVIRONMENT === "DEVELOPMENT" ? `http://localhost:${process.env.PORT}/uploads/` + req.file.filename : `${process.env.PRODUCTION_SERVER_URL}/uploads/` + req.file.filename;
 
         const newEvent = await event.create({
