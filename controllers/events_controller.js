@@ -6,10 +6,10 @@ exports.createEvent = async (req, res) => {
         const { name, datetime, description, location, rules, amount } = req.body;
 
         if (!req.file) {
-            return res.status(400).json({ success: false, message: 'Please upload an image' });
+            return res.status(400).json({ success: false, message: 'Please upload a Poster' });
         }
 
-        const imageFileRemotePath = process.env.ENVIRONMENT === "DEVELOPMENT" ? `http://localhost:${process.env.PORT}/uploads/` + req.file.filename : `${process.env.PRODUCTION_SERVER_URL}/uploads/` + req.file.filename;
+        const imageFileRemotePath = process.env.ENVIRONMENT === "DEVELOPMENT" ? `http://localhost:${process.env.PORT}/poster_images/` + req.file.filename : `${process.env.PRODUCTION_SERVER_URL}/poster_images/` + req.file.filename;
 
         const newEvent = await event.create({
             name: name,
@@ -65,16 +65,16 @@ exports.updateEvent = async (req, res) => {
         }
 
         if (req.file) {
-            const imageFileRemotePath = process.env.ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:3000/uploads/" + req.file.filename : `${process.env.PRODUCTION_SERVER_URL}/uploads/` + req.file.filename;
+            const imageFileRemotePath = process.env.ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:3000/poster_images/" + req.file.filename : `${process.env.PRODUCTION_SERVER_URL}/poster_images/` + req.file.filename;
             const previousPoster = updatedEvent.poster;
             const previousPosterPath = previousPoster.split('/').pop();
 
-            fs.unlink(`./public/uploads/${previousPosterPath}`, (err) => {
+            fs.unlink(`./public/poster_images/${previousPosterPath}`, (err) => {
                 if (err) {
                     console.log(err);
                     res.status(500).json({ success: false, message: err.message });
                 } else {
-                    console.log(`Deleted file: ./public/uploads/${previousPosterPath}`);
+                    console.log(`Deleted file: ./public/poster_images/${previousPosterPath}`);
                 }
             });
 
@@ -104,11 +104,11 @@ exports.deleteEvent = async (req, res) => {
         const previousPoster = deletedEvent.poster;
         const previousPosterPath = previousPoster.split('/').pop();
 
-        fs.unlink(`./public/uploads/${previousPosterPath}`, (err) => {
+        fs.unlink(`./public/poster_images/${previousPosterPath}`, (err) => {
             if (err) {
                 res.status(500).json({ success: false, message: err.message });
             } else {
-                console.log(`Deleted file: ./public/uploads/${previousPosterPath}`);
+                console.log(`Deleted file: ./public/poster_images/${previousPosterPath}`);
             }
         });
 

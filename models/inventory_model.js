@@ -5,18 +5,19 @@ const inventoryModel = new mongoose.Schema({
         type: mongoose.ObjectId,
         ref: "User"
     },
-    event_id: {
+    purchased_items_id: {
         type: mongoose.ObjectId,
-        ref: "Event"
-    },
-    quantity: {
-        type: Number
+        ref: "PurchasedItems"
     },
     transaction_id: {
         type: String
     },
     payment_screenshot: {
         type: String
+    },
+    verified_purchase: {
+        type: Boolean,
+        default: false
     }
 });
 

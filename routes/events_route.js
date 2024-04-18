@@ -1,23 +1,20 @@
 const eventsRouter = require('express').Router();
-const multer = require('multer');
 
-const { storage } = require('../middlewares/upload');
 const {
     createEvent, getAllEvents, getEvent, updateEvent, deleteEvent, getPaginatedEvents
 } = require('../controllers/events_controller');
 
-const uploadStorage = multer({ storage: storage });
+const upload = require("../middlewares/uploadPoster");
 
 const { authorizeRoles, isAuthenticatedUser } = require('../middlewares/auth');
-const { events } = require('../models/user_model');
 
-eventsRouter.post('/createEvent', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), createEvent);
+eventsRouter.post('/createEvent', isAuthenticatedUser, authorizeRoles("user", "admin"), upload.single("poster"), createEvent);
 
 eventsRouter.get('/getAllEvents', isAuthenticatedUser, authorizeRoles("user", "admin"), getAllEvents);
 
 eventsRouter.get('/getEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), getEvent);
 
-eventsRouter.put('/updateEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), uploadStorage.single("file"), updateEvent);
+eventsRouter.put('/updateEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), upload.single("poster"), updateEvent);
 
 eventsRouter.delete('/deleteEvent/:id', isAuthenticatedUser, authorizeRoles("user", "admin"), deleteEvent);
 
