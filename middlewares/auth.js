@@ -15,7 +15,16 @@ exports.isAuthenticatedUser = async (req, res, next) => {
 
     const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    req.user = await User.findOne({ uid: decodedData.id }).exec();
+    if (decodedData.role === "admin") {
+        req.user = {
+            id: decodedData.id,
+            role: decodedData.role,
+        };
+    } else {
+        req.user = await User.findOne({ uid: decodedData.id }).exec();
+    }
+
+    // req.user = await User.findOne({ uid: decodedData.id }).exec();
 
     next();
 };
