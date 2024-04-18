@@ -15,6 +15,9 @@ const inventoryModel = new mongoose.Schema({
     payment_screenshot: {
         type: String
     },
+    referral_id: {
+        type: String
+    },
     verified_purchase: {
         type: Boolean,
         default: false

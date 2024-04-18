@@ -37,7 +37,7 @@ exports.getCheckoutLink = async (req, res) => {
 
 exports.checkoutDetailsUpload = async (req, res) => {
     try {
-        const { transaction_id } = req.body;
+        const { transaction_id, referral_id } = req.body;
 
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'Please upload screenshot of payment' });
@@ -59,7 +59,8 @@ exports.checkoutDetailsUpload = async (req, res) => {
             user_id: req.user._id,
             purchased_items_id: purchasedItems._id,
             transaction_id: transaction_id,
-            payment_screenshot: imagePath
+            payment_screenshot: imagePath,
+            referral_id: referral_id,
         });
 
         res.status(201).json({ success: true, message: 'Payment data uploaded successfully', data: purchasedItems });
