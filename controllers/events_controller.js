@@ -3,7 +3,7 @@ const fs = require('fs');
 
 exports.createEvent = async (req, res) => {
     try {
-        const { name, datetime, description, location, rules, amount } = req.body;
+        const { name, datetime, description, location, rules, amount, theme } = req.body;
 
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'Please upload a Poster' });
@@ -18,7 +18,8 @@ exports.createEvent = async (req, res) => {
             location: location,
             rules: rules,
             amount: amount,
-            poster: imageFileRemotePath
+            poster: imageFileRemotePath,
+            theme: theme
         });
 
         res.status(201).json({ success: true, message: 'Event created successfully', data: newEvent });

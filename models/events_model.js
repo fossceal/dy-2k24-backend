@@ -29,6 +29,10 @@ const eventsModel = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    theme: {
+        type: String,
+        required: true,
+    }
 });
 
 const Event = mongoose.model('Event', eventsModel);

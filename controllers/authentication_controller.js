@@ -58,6 +58,21 @@ exports.loginUser = async (req, res) => {
     }
 }
 
+exports.loginAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            sendToken({ uid: 'admin', name: 'admin', role: "admin" }, 200, res);
+        } else {
+            res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
 exports.logoutUser = async (req, res) => {
     try {
         res.cookie('token', null, {
