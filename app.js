@@ -17,7 +17,10 @@ const eventsRouter = require("./routes/events_route");
 const cartRouter = require("./routes/cart_route");
 const InventoryRouter = require("./routes/inventory_route");
 
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000", "https://server.dakshayanthra.in", "http://localhost:5500"],
+    credentials: true,
+}));
 
 connectDatabase();
 

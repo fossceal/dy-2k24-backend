@@ -15,7 +15,7 @@ const sendToken = (user, statusCode, res) => {
         //    httpOnly: true
         httpOnly: false,
         withCredentials: true,
-        sameSite: "none",
+        cookie_samesite: "none",
         // secure: false,
     };
 
