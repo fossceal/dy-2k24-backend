@@ -10,7 +10,7 @@ exports.getCheckoutLink = async (req, res) => {
     try {
         const cart = await Cart.findOne({ user: req.user._id });
 
-        if (cart.cartItems.length === 0) {
+        if (cart.cartItems.length === 0 && cart.merchItems.length === 0) {
             res.status(400).json({ success: false, message: 'Cart is empty' });
         }
 
@@ -26,8 +26,6 @@ exports.getCheckoutLink = async (req, res) => {
         QRCode.toBuffer(UPI, function (err, buffer) {
             res.status(200).json({ success: true, data: buffer, payment_link: UPI });
         });
-
-        // res.status(400).json({ success: false, message: 'Internal server error' });
 
     } catch (err) {
         console.log(err);
@@ -50,6 +48,7 @@ exports.checkoutDetailsUpload = async (req, res) => {
         const purchasedItems = await PurchasedItems.create({
             user: req.user._id,
             purchasedItems: cart.cartItems,
+            purchasedMerchs: cart.merchItems,
             totalPrice: cart.totalPrice,
         });
 

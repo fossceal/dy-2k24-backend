@@ -19,6 +19,19 @@ const purchasedItemsSchema = new mongoose.Schema({
             }
         }
     ],
+    purchasedMerchs: [
+        {
+            merch_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Merch',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
     totalPrice: {
         type: Number,
         required: true,

@@ -9,14 +9,14 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-exports.sendMail = async (to, subject, text, html) => {
+exports.sendMail = async (to, subject, html, attachments) => {
     try {
         transporter.sendMail({
             from: "Daksha Yanthra Team",
             to: to,
             subject: subject,
-            text: text,
             html: html,
+            attachments: attachments
         });
 
         return;
