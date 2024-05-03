@@ -8,32 +8,16 @@ exports.sendProshowTickets = async () => {
     try {
 
         const names = [
-            "Krishnan Unni",
-            "Aadhil Shah",
-            "Nihan",
-            "Saran",
-            "Akshay",
+            "Surya Krishna H"
         ];
         const emails = [
-            "unni88970@gmail.com",
-            "ziyaxnaz24@gmail.com",
-            "ziyaxnaz24@gmail.com",
-            "ziyaxnaz24@gmail.com",
-            "akshaydm2005@gmail.com",
+            "1sreegovind@gmail.com"
         ];
         const phones = [
-            "9496675663",
-            "9995634424",
-            "9995634424",
-            "9995634424",
-            "7736280448",
+            "9207234850"
         ];
         const colleges = [
-            "Mar Ivanios College Tvm",
-            "ACE College of Engineering",
-            "CUSAT",
-            "SD College Alappuzha",
-            "KIMS College of Nursing"
+            "College of Engineering Attingal"
         ];
 
         for (var i = 0; i < emails.length; i++) {
