@@ -1,6 +1,7 @@
 const Proshow = require("../models/proshow_model");
 const { sendMail } = require("../utils/sendMail");
 const qrcode = require('qrcode');
+const { nanoid } = require("nanoid");
 
 //used only once
 exports.sendProshowTickets = async () => {
@@ -8,16 +9,96 @@ exports.sendProshowTickets = async () => {
     try {
 
         const names = [
+            "Krishna Priya",
+            "Mohammed Jassim N",
+            "Shan Muraleedharan",
+            "Niveditha S",
+            "Niveda Ajith",
+            "AKASH",
+            "Midhun Sujathan",
+            "Shawn Siby George",
+            "Dilshan Dileep Shyni",
+            "Reuben Roy Vargis",
+            "ABHIJEET J KARTHA",
+            "Fahad.s",
+            "Aashi",
+            "Meenakshi S",
+            "Harikrishnan",
+            "Krishnan Unni",
+            "Aadhil Shah",
+            "Nihan",
+            "Saran",
+            "Akshay",
             "Surya Krishna H"
         ];
         const emails = [
+            "krishnapriyabiji1112@gmail.com",
+            "jassimwushu@gmail.com",
+            "shanmuralidharan99@gmail.com",
+            "nivedithastvm@gmail.com",
+            "nivedaajith11@gmail.com",
+            "iamsorryicanttellyouthat@gmail.com",
+            "gitalachu123@gmail.com",
+            "sibyshawn@gmail.com",
+            "dilshandileep6@gmail.com",
+            "reubenroy101@gmail.com",
+            "dilshandileep19@gmail.com",
+            "hrdfahadml16@gmail.com",
+            "irshiks@gmail.com",
+            "irshiks@gmail.com",
+            "irshiks@gmail.com",
+            "unni88970@gmail.com",
+            "ziyaxnaz24@gmail.com",
+            "ziyaxnaz24@gmail.com",
+            "ziyaxnaz24@gmail.com",
+            "akshaydm2005@gmail.com",
             "1sreegovind@gmail.com"
         ];
         const phones = [
+            "99475 56831",
+            "7559960892",
+            "8590117668",
+            "6238798936",
+            "7593068227",
+            "8590710105",
+            "8592826202",
+            "7902642950",
+            "9400012411",
+            "9645435705",
+            "9539277242",
+            "8075777930",
+            "8590320383",
+            "8590320383",
+            "8590320383",
+            "9496675663",
+            "9995634424",
+            "9995634424",
+            "9995634424",
+            "7736280448",
             "9207234850"
         ];
         const colleges = [
-            "College of Engineering Attingal"
+            "Sree Narayana Guru College of Legal Studies",
+            "Mar Ivanios",
+            "MGM PTC",
+            "Bangalore Institute of Technology",
+            "Providence Women's College",
+            "Logic School Of Management",
+            "Musaliar College of Engineering",
+            "Mar Baselios College of Engineering and Technology",
+            "Mar Baselios College Of Engineering and Technology",
+            "Mar Baselios College of Engineering and Technology",
+            "Mar Baselios College of Engineering and Technology",
+            "KTCT",
+            "Rajadhani Institute Of Engineering And Technology",
+            "Rajadhani Institute Of Engineering And Technology",
+            "Rajadhani Institute Of Engineering And Technology",
+            "Mar Ivanios College Tvm",
+            "ziyaxnaz24@gmail.com",
+            "CUSAT",
+            "SD College Alappuzha",
+            "KIMS College of Nursing",
+            "Rajadhani Institute Of Engineering And Technology"
         ];
 
         for (var i = 0; i < emails.length; i++) {
@@ -26,15 +107,15 @@ exports.sendProshowTickets = async () => {
             const phone = phones[i];
             const college = colleges[i];
 
-            const proshow = await Proshow.create({
-                email,
-                phone,
-                name,
-                college,
-            });
+            const id = nanoid(6);
 
-            const qrCodeData = proshow.id;
-            console.log(proshow.id);
+            await Proshow.create({
+                email: email,
+                phone: phone,
+                name: name,
+                college: college,
+                uniqueString: id,
+            });
 
             const htmlTemplate = `
             <!DOCTYPE html>
@@ -54,6 +135,7 @@ exports.sendProshowTickets = async () => {
                         padding: 20px;
                         border-radius: 5px;
                         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position:relative;
                     }
                     h1 {
                         color: #0077b6;
@@ -70,11 +152,12 @@ exports.sendProshowTickets = async () => {
             </head>
             <body>
                 <div class="container">
+                    <img src="https://dakshayanthra.in/assets/titleCard.png" style="width: 100%;height: auto;">
                     <h1>ProShow Ticket</h1>
                     <p>Dear ${name},</p>
                     <p>Thank you for your registration for our upcoming event. Here are the details of your ticket:</p>
                     <div class="ticket-details">
-                        <p><strong>Ticket Number:</strong> ${qrCodeData}</p>
+                        <p><strong>Ticket Number:</strong> ${id}</p>
                         <p><strong>Event Name:</strong> Daksha Yanthra Proshow</p>
                         <p><strong>Date:</strong> 5/05/2024</p>
                         <p><strong>Entry Time:</strong> 05:30 PM </p>
@@ -91,7 +174,7 @@ exports.sendProshowTickets = async () => {
             </html>
                 `;
 
-            qrcode.toFile('qrCode.png', qrCodeData, { errorCorrectionLevel: 'H' }, (err) => {
+            qrcode.toFile('qrCode.png', id, { errorCorrectionLevel: 'H' }, (err) => {
                 if (err) throw err;
 
                 const attachment = [{
@@ -101,8 +184,9 @@ exports.sendProshowTickets = async () => {
                 }];
 
                 sendMail(email, "Daksha Yanthra Pro Show Ticket", htmlTemplate, attachment);
-
             });
+            //await a delay of 5 seconds
+            await new Promise(resolve => setTimeout(resolve, 5000));
         }
     } catch (err) {
         console.log(err);
@@ -111,7 +195,7 @@ exports.sendProshowTickets = async () => {
 
 exports.getProshowDetails = async (req, res) => {
     try {
-        const proshow = await Proshow.findById(req.params.id).exec();
+        const proshow = await Proshow.findOne({ uniqueString: req.params.id }).exec();
 
         if (!proshow) {
             return res.status(404).json({ success: false, message: 'User not found' });

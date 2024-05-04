@@ -5,6 +5,7 @@ const proshowModel = new mongoose.Schema({
     phone: String,
     name: String,
     college: String,
+    uniqueString: String,
 });
 
 const ProShow = mongoose.model("Proshow", proshowModel);
